@@ -3,9 +3,11 @@
 		"lint": "standard",
 		"test": "npm run test:node && npm run test:express",
 		"test:node": "node --test ./test/index.js",
-		"test:express": "node --test ./test/express.js"
+		"test:express": "node --test ./test/express.js",
+		"dev": "nodemon ./node.js"
 	},
 	"devDependencies": {
+		"nodemon": "^3.0.1",
 		"standard": "17.1.0"
 	},
 	"eslintConfig": {
