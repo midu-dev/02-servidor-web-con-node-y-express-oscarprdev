@@ -1,5 +1,4 @@
 // Ejercicio 2: crear servidor HTTP con Express
-const fs = require('node:fs/promises')
 const express = require('express')
 const ROUTES = require('./routes')
 
@@ -37,7 +36,7 @@ app.use((req, res) => {
 })
 
 function startServer () {
-  app.listen(PORT, () => console.log(`server listening on port http://localhost:${PORT}`))
+  return app.listen(PORT, () => console.log(`server listening on port http://localhost:${PORT}`))
 }
 
 module.exports = {
