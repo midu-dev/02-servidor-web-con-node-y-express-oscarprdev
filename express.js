@@ -8,16 +8,6 @@ const PORT = process.env.PORT ?? 1234
 const app = express()
 app.use(express.json())
 
-async function retrieveLogo(res) {
-  try {
-    const data = await fs.readFile('./assets/logo.webp')
-
-    return res.set('content-type', 'image/webp').end(data)
-  } catch (e) {
-    return res.status(501).send('<h1>500 Internal Server Error</h1>')
-  }
-}
-
 function retrieveContact(req, res) {
   const { body } = req
 
@@ -36,7 +26,7 @@ function isMethodNotAllowed(req) {
 
 app.get(ROUTES.INITIAL, (req, res) => res.send('<h1>¡Hola mundo!</h1>'))
 
-app.get(ROUTES.LOGO, (req, res) => retrieveLogo(res))
+app.get(ROUTES.LOGO, express.static('assets'))
 
 app.post(ROUTES.CONTACTO, (req, res) => retrieveContact(req, res))
 
