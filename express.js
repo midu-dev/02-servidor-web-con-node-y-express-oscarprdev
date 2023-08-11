@@ -7,10 +7,14 @@ const PORT = process.env.PORT ?? 1234
 const app = express()
 app.use(express.json())
 
+
 function retrieveContact(req, res) {
   const { body } = req
 
-  if (Object.keys(body).some(key => !['name', 'email', 'message'].includes(key))) {
+  const requiredKeys = ['name', 'email', 'message']
+  const isValid = requiredKeys.every((i) => body.hasOwnProperty(i))
+
+  if (!isValid) {
     return res.status(400).send('<h1>Invalid request body</h1>')
   }
 
