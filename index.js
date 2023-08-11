@@ -33,7 +33,10 @@ function retrieveContact(req, res) {
   req.on('end', () => {
     const data = JSON.parse(body)
 
-    if (Object.keys(data).some(key => !['name', 'email', 'message'].includes(key))) {
+    const requiredKeys = ['name', 'email', 'message']
+    const isValid = requiredKeys.every((i) => body.hasOwnProperty(i))
+
+    if (!isValid) {
       res.statusCode = 400
       return res.end('<h1>Invalid request body</h1>')
     }
@@ -50,19 +53,25 @@ async function processRequest(req, res) {
   // return server
   switch (url) {
     case ROUTES.INITIAL: {
-      return method !== 'GET'
-        ? endWithMethodNotAllowed(res)
-        : res.end('<h1>¡Hola mundo!</h1>')
+      if (method === 'GET') {
+        return res.end('<h1>¡Hola mundo!</h1>')
+      }
+
+      return endWithMethodNotAllowed(res)
     }
     case ROUTES.LOGO: {
-      return method !== 'GET'
-        ? endWithMethodNotAllowed(res)
-        : retrieveLogo(res)
+      if (method === 'GET') {
+        return retrieveLogo(res)
+      }
+
+      return endWithMethodNotAllowed(res)
     }
     case ROUTES.CONTACTO: {
-      return method !== 'POST'
-        ? endWithMethodNotAllowed(res)
-        : retrieveContact(req, res)
+      if (method === 'POST') {
+        return retrieveContact(req, res)
+      }
+
+      return endWithMethodNotAllowed(res)
     }
     default: {
       res.setHeader('Content-Type', 'text/html; charset=UTF-8')
