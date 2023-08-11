@@ -34,7 +34,7 @@ function retrieveContact(req, res) {
     const data = JSON.parse(body)
 
     const requiredKeys = ['name', 'email', 'message']
-    const isValid = requiredKeys.every((i) => body.hasOwnProperty(i))
+    const isValid = requiredKeys.every((i) => body.hasOwn(i))
 
     if (!isValid) {
       res.statusCode = 400
